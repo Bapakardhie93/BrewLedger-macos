@@ -15,6 +15,7 @@ enum SidebarDestination: String, CaseIterable, Identifiable {
     case suppliers
     case purchaseOrders
     case transactions
+    case users
     case settings
 
     var id: String {
@@ -42,6 +43,9 @@ enum SidebarDestination: String, CaseIterable, Identifiable {
 
         case .transactions:
             return "Transactions"
+            
+        case .users:
+            return "Manajemen Akun"
 
         case .settings:
             return "Settings"
@@ -69,6 +73,9 @@ enum SidebarDestination: String, CaseIterable, Identifiable {
 
         case .transactions:
             return "cart"
+            
+        case .users:
+            return "person.2"
 
         case .settings:
             return "gear"

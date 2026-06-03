@@ -9,7 +9,7 @@ class AuthService {
         
         let jsonData = try JSONSerialization.data(withJSONObject: body)
         
-        let response: AuthResponse = try await APIClient.shared.request(
+        let response: AuthResponse = try await NetworkClient.shared.request(
             endpoint: "/api/auth/login",
             method: "POST",
             body: jsonData,

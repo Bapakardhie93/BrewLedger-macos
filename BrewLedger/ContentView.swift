@@ -12,13 +12,20 @@ struct ContentView: View {
     @State
     private var selected: SidebarDestination?
     = .dashboard
+    
+    @EnvironmentObject var session: SessionManager
 
     var body: some View {
 
         NavigationSplitView {
 
             List(
-                SidebarDestination.allCases,
+                SidebarDestination.allCases.filter {
+                    if $0 == .users {
+                        return session.role == "ROLE_ADMIN" || session.role == "ADMIN"
+                    }
+                    return true
+                },
                 selection: $selected
             ) {
 
@@ -53,6 +60,9 @@ struct ContentView: View {
 
             case .transactions:
                 TransactionsListView()
+                
+            case .users:
+                UserManagementView()
 
             case .settings:
                 SettingsView()

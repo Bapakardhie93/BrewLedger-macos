@@ -9,12 +9,9 @@ import Foundation
 
 final class ProductService {
 
-    func getProducts() async throws
-    -> [ProductResponse] {
-
-        try await APIClient.shared.get(
-            endpoint: "/api/products",
-            responseType: [ProductResponse].self
+    func getProducts() async throws -> [ProductResponse] {
+        try await NetworkClient.shared.request(
+            endpoint: "/api/products"
         )
     }
 }

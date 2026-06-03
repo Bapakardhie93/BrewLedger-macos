@@ -4,13 +4,13 @@ This document is specifically designed for **macOS and iOS frontend developers (
 
 ## Base Configuration
 
-- **Base URL (Local)**: `http://localhost:8080`
+- **Base URL (Local)**: `http://localhost:8081`
 - **Content-Type**: `application/json`
 - **Authentication**: Bearer Token (JWT). You must include the token in the `Authorization` header for all requests except `/api/auth/login`.
 
 ```swift
 // Example URLRequest in Swift
-var request = URLRequest(url: URL(string: "http://localhost:8080/api/endpoint")!)
+var request = URLRequest(url: URL(string: "http://localhost:8081/api/endpoint")!)
 request.setValue("Bearer \(yourJwtToken)", forHTTPHeaderField: "Authorization")
 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 ```
@@ -20,11 +20,13 @@ request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 ## 1. Authentication
 
 ### Login
+
 - **Endpoint**: `POST /api/auth/login`
 - **Auth Required**: No
 - **Description**: Authenticates a user and returns a JWT token.
 
 **Request Body (JSON):**
+
 ```json
 {
   "username": "admin",
@@ -33,6 +35,7 @@ request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 ```
 
 **Response (200 OK):**
+
 ```json
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
@@ -41,17 +44,20 @@ request.setValue("application/json", forHTTPHeaderField: "Content-Type")
   "role": "ROLE_ADMIN"
 }
 ```
-*Note for SwiftUI: Save this `token` in Keychain or UserDefaults to append to subsequent requests.*
+
+_Note for SwiftUI: Save this `token` in Keychain or UserDefaults to append to subsequent requests._
 
 ---
 
 ## 2. Dashboard
 
 ### Get Dashboard Stats
+
 - **Endpoint**: `GET /api/dashboard`
 - **Auth Required**: Yes
 
 **Response (200 OK):**
+
 ```json
 {
   "totalProducts": 24,
@@ -68,14 +74,17 @@ request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 ## 3. Product & Category Management
 
 ### Get All Categories
+
 - **Endpoint**: `GET /api/categories`
 - **Auth Required**: Yes
 
 ### Create Category
+
 - **Endpoint**: `POST /api/categories`
 - **Auth Required**: Yes
 
 **Request Body:**
+
 ```json
 {
   "name": "Coffee",
@@ -84,14 +93,17 @@ request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 ```
 
 ### Get All Products
+
 - **Endpoint**: `GET /api/products`
 - **Auth Required**: Yes
 
 ### Create Product
+
 - **Endpoint**: `POST /api/products`
 - **Auth Required**: Yes
 
 **Request Body:**
+
 ```json
 {
   "code": "PRD-001",
@@ -102,6 +114,7 @@ request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 ```
 
 ### Search Products
+
 - **Endpoint**: `GET /api/products/search?query=americano`
 - **Auth Required**: Yes
 
@@ -110,14 +123,17 @@ request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 ## 4. Ingredients & Suppliers
 
 ### Get All Suppliers
+
 - **Endpoint**: `GET /api/suppliers`
 - **Auth Required**: Yes
 
 ### Create Supplier
+
 - **Endpoint**: `POST /api/suppliers`
 - **Auth Required**: Yes
 
 **Request Body:**
+
 ```json
 {
   "name": "Supplier A",
@@ -127,14 +143,17 @@ request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 ```
 
 ### Get All Ingredients
+
 - **Endpoint**: `GET /api/ingredients`
 - **Auth Required**: Yes
 
 ### Create Ingredient
+
 - **Endpoint**: `POST /api/ingredients`
 - **Auth Required**: Yes
 
 **Request Body:**
+
 ```json
 {
   "code": "ING-001",
@@ -148,6 +167,7 @@ request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 ```
 
 ### Low Stock Alert
+
 - **Endpoint**: `GET /api/ingredients/low-stock`
 - **Auth Required**: Yes
 - **Description**: Returns all ingredients where `currentStock < minimumStock`. Use this to display a badge or alert in the macOS app.
@@ -157,10 +177,12 @@ request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 ## 5. Product Recipes
 
 ### Create Recipe
+
 - **Endpoint**: `POST /api/product-recipes`
 - **Auth Required**: Yes
 
 **Request Body:**
+
 ```json
 {
   "productId": 1,
@@ -170,6 +192,7 @@ request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 ```
 
 ### Get Recipes By Product
+
 - **Endpoint**: `GET /api/product-recipes/product/{productId}`
 - **Auth Required**: Yes
 
@@ -178,14 +201,17 @@ request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 ## 6. Purchase Orders (Restock Flow)
 
 ### Get All Purchase Orders
+
 - **Endpoint**: `GET /api/purchase-orders`
 - **Auth Required**: Yes
 
 ### Create Purchase Order
+
 - **Endpoint**: `POST /api/purchase-orders`
 - **Auth Required**: Yes
 
 **Request Body:**
+
 ```json
 {
   "supplierId": 1,
@@ -194,10 +220,12 @@ request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 ```
 
 ### Add PO Items
+
 - **Endpoint**: `POST /api/purchase-orders/{id}/items`
 - **Auth Required**: Yes
 
 **Request Body:**
+
 ```json
 {
   "ingredientId": 1,
@@ -207,10 +235,12 @@ request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 ```
 
 ### Get PO Items
+
 - **Endpoint**: `GET /api/purchase-orders/{id}/items`
 - **Auth Required**: Yes
 
 ### Receive PO (Update Stock)
+
 - **Endpoint**: `POST /api/purchase-orders/{id}/receive`
 - **Auth Required**: Yes
 - **Description**: Marks the PO as RECEIVED and automatically updates the ingredient stock.
@@ -220,11 +250,13 @@ request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 ## 7. Point of Sale (POS) Transactions
 
 ### Create Transaction (Checkout)
+
 - **Endpoint**: `POST /api/transactions`
 - **Auth Required**: Yes
 - **Description**: This is the core POS endpoint. Submitting this will validate stock via recipes, deduct the stock, create stock movements, and save the transaction.
 
 **Request Body:**
+
 ```json
 {
   "customerName": "John Doe",
@@ -240,6 +272,7 @@ request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 ```
 
 ### Get All Transactions
+
 - **Endpoint**: `GET /api/transactions`
 - **Auth Required**: Yes
 
@@ -248,16 +281,76 @@ request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 ## 8. Stock Movements (Audit)
 
 ### Get All Stock Movements
+
 - **Endpoint**: `GET /api/stock-movements`
 - **Auth Required**: Yes
 - **Description**: Fetch audit logs for all stock changes (type `PURCHASE` or `SALE`). Useful for reporting.
 
 ---
 
+## 9. User & Role Management
+
+### Get All Users
+
+- **Endpoint**: `GET /api/users`
+- **Auth Required**: Yes (Requires `ROLE_ADMIN`)
+
+### Get User By ID
+
+- **Endpoint**: `GET /api/users/{id}`
+- **Auth Required**: Yes (Requires `ROLE_ADMIN`)
+
+### Create User
+
+- **Endpoint**: `POST /api/users`
+- **Auth Required**: Yes (Requires `ROLE_ADMIN`)
+
+**Request Body:**
+
+```json
+{
+  "fullName": "Surya Developer",
+  "username": "surya",
+  "password": "securepassword",
+  "roleId": 1
+}
+```
+
+### Update User
+
+- **Endpoint**: `PUT /api/users/{id}`
+- **Auth Required**: Yes (Requires `ROLE_ADMIN`)
+
+**Request Body:**
+
+```json
+{
+  "fullName": "Surya Developer Update",
+  "username": "surya2",
+  "password": "newpassword123",
+  "roleId": 2
+}
+```
+
+_Note: `password` is optional. Jika tidak dikirim/kosong, password tidak akan diubah._
+
+### Delete User
+
+- **Endpoint**: `DELETE /api/users/{id}`
+- **Auth Required**: Yes (Requires `ROLE_ADMIN`)
+
+### Activate / Deactivate User
+
+- **Endpoint**: `PATCH /api/users/{id}/activate`
+- **Endpoint**: `PATCH /api/users/{id}/deactivate`
+- **Auth Required**: Yes (Requires `ROLE_ADMIN`)
+
+---
+
 ## Best Practices for macOS (SwiftUI) Integration
 
 1. **Codable Models**: Create `Codable` structs for all the JSON requests and responses above.
-2. **Error Handling**: 
+2. **Error Handling**:
    - 401 Unauthorized: Trigger a logout and redirect the user back to the Login View.
    - 400 Bad Request: Display validation errors from the backend.
    - 409 Conflict: Usually returned when trying to create a transaction without sufficient stock. Catch this and show a descriptive alert "Stok tidak cukup".
