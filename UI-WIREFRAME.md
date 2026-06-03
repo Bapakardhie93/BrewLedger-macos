@@ -1,0 +1,231 @@
+# BrewLedger macOS UI Wireframe
+
+Version: 1.0
+
+---
+
+# Application Layout
+
+Global layout:
+
+┌────────────────────────────────────────────┐
+│ Sidebar │ Header │ Main Content │
+└────────────────────────────────────────────┘
+
+Sidebar:
+
+Logo
+
+Dashboard
+POS
+Products
+Inventory
+Suppliers
+Purchase Orders
+Reports
+Audit
+Profile
+
+Bottom:
+
+Settings
+Logout
+
+---
+
+# Login Screen
+
+┌─────────────────────────────┐
+│ │
+│ BrewLedger Logo │
+│ │
+│ Username │
+│ [***************] │
+│ │
+│ Password │
+│ [***************] │
+│ │
+│ Login Button │
+│ │
+└─────────────────────────────┘
+
+Behavior:
+
+Loading state:
+
+[Loading spinner]
+
+Error:
+
+"Username atau password salah"
+
+---
+
+# Dashboard Screen
+
+┌─────────────────────────────────────────────┐
+│ Header │
+├─────────────────────────────────────────────┤
+│ Stats Cards │
+│ │
+│ Products │ Sales │ Orders │ Suppliers │
+│ │
+├─────────────────────────────────────────────┤
+│ Sales Chart │
+│ │
+├────────────────────┬────────────────────────┤
+│ Low Stock │ Recent Transactions │
+│ │ │
+└────────────────────┴────────────────────────┘
+
+---
+
+# POS Screen
+
+┌───────────────────────────────────────────────────────────┐
+│ Search │
+├──────────────┬────────────────────────┬───────────────────┤
+│ Categories │ Product Grid │ Cart │
+│ │ │ │
+│ Coffee │ Americano │ Americano x2 │
+│ Tea │ Latte │ Cappuccino x1 │
+│ Snacks │ Cappuccino │ │
+│ │ │ Total │
+│ │ │ Rp 75.000 │
+│ │ │ │
+│ │ │ Checkout │
+└──────────────┴────────────────────────┴───────────────────┘
+
+Workflow:
+
+Click Product
+
+↓
+
+Add to cart
+
+↓
+
+Adjust quantity
+
+↓
+
+Checkout
+
+↓
+
+Payment modal
+
+↓
+
+Transaction success
+
+---
+
+# Product Management
+
+┌──────────────────────────────────────────────┐
+│ Search │
+├──────────────────────────────────────────────┤
+│ Table │
+│ │
+│ Code | Name | Category | Price | Action │
+│ │
+└──────────────────────────────────────────────┘
+
+Actions:
+
+Add
+Edit
+Delete
+
+---
+
+# Inventory Screen
+
+┌──────────────────────────────────────────────┐
+│ Search │
+├──────────────────────────────────────────────┤
+│ Ingredient Table │
+│ │
+│ Name │ Stock │ Min │ Unit │ Supplier │ │
+│ │
+└──────────────────────────────────────────────┘
+
+Indicators:
+
+🟢 Safe
+
+🟡 Low
+
+🔴 Critical
+
+---
+
+# Purchase Order Screen
+
+┌────────────────────────────────────┐
+│ Purchase Order List │
+├────────────────────────────────────┤
+│ PO001 Supplier A Pending │
+│ PO002 Supplier B Received │
+│ │
+├────────────────────────────────────┤
+│ Detail │
+│ │
+│ Ingredient │
+│ Quantity │
+│ Price │
+│ │
+└────────────────────────────────────┘
+
+---
+
+# Report Screen
+
+┌────────────────────────────────────┐
+│ Filters │
+│ Date Range │
+│ Export │
+├────────────────────────────────────┤
+│ Sales Chart │
+├────────────────────────────────────┤
+│ Top Product │
+├────────────────────────────────────┤
+│ Inventory Report │
+└────────────────────────────────────┘
+
+---
+
+# Notification Center
+
+Top-right panel:
+
+- Low stock alert
+- Purchase received
+- Transaction success
+- System notification
+
+---
+
+# Keyboard Shortcuts
+
+⌘ + F
+
+Search
+
+⌘ + N
+
+Create new item
+
+⌘ + P
+
+Open POS
+
+⌘ + R
+
+Refresh
+
+ESC
+
+Close modal
